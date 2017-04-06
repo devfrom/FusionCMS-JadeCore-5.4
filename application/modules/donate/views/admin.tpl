@@ -26,7 +26,7 @@
 							<tr>
 								<td width="13%">{date("Y/m/d", $paypal_log.timestamp)}</td>
 								<td width="13%">
-									<a href="{$url}profile/{$paypal_log.user_id}" target="_blank">
+									<a href="{$url}admin/accounts/get/{$paypal_log.user_id}" target="_blank">
 										{$paypal_log.nickname}
 									</a>
 								</td>
@@ -78,7 +78,7 @@
 							<tr>
 								<td width="15%">{date("Y/m/d", $paygol_log.timestamp)}</td>
 								<td width="13%">
-									<a href="{$url}profile/{$paygol_log.custom}" target="_blank">
+									<a href="{$url}admin/accounts/get/{$paygol_log.custom}" target="_blank">
 										{$paygol_log.nickname}
 									</a>
 								</td>
@@ -87,6 +87,58 @@
 								<td width="10%"><img src="{$url}application/images/flags/{strtolower($paygol_log.country)}.png" data-tip="{$paygol_log.country}" style="opacity:1;"/></td>
 								<td data-tip="Message ID: {$paygol_log.message_id}">{$paygol_log.sender}</td>
 							
+							</tr>
+						</table>
+					</li>
+				{/foreach}
+			{/if}
+		</ul>
+	</section>
+{/if}
+
+{if $paymentwall_enabled}
+	<section class="box big" id="donate_articles">
+		<h2>
+			<img src="{$url}application/themes/admin/images/icons/black16x16/ic_text_document.png"/>
+			Last 10 Paymentwall donations
+		</h2>
+
+		<form style="margin-top:0px;" onSubmit="Donate.search('paymentwall'); return false">
+			<input type="text" name="search_paymentwall" id="search_paymentwall" placeholder="Search by username or transaction signature" style="width:90%;margin-right:5px;"/>
+			<input type="submit" value="Search" style="display:inline;padding:8px;" />
+		</form>
+	
+		<ul id="donate_list_paymentwall">
+			{if $paymentwall_logs}
+				{foreach from=$paymentwall_logs item=log}
+					<li>
+						<table width="100%" style="font-size:11px;">
+							<tr>
+								<td>{date("Y/m/d", $log.timestamp)}</td>
+								<td>
+									<a href="{$url}admin/accounts/get/{$log.user_id}" target="_blank">
+										{$log.nickname}
+									</a>
+								</td>
+								<td><b>{$log.dp_amount} DP</b></td>
+								<td>
+									Status: 
+									{if $log.status == 'success'}
+										<span style="display:inline;color:green">Success</span>
+									{else}
+										<span style="display:inline;color:red">Failed</span>
+									{/if}
+								</td>
+								<td>
+									Type:
+									{if $log.type == 0}
+										Credit
+									{elseif $log.type == 1}
+										Credit (courtesy)
+									{elseif $log.type == 2}
+										Chargeback
+									{/if}
+								</td>
 							</tr>
 						</table>
 					</li>

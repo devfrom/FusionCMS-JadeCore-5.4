@@ -19,14 +19,12 @@ class Donate extends MX_Controller
 
 		$this->template->setTitle(lang("donate_title", "donate"));
 
-		$donate_paypal = $this->config->item('donate_paypal');
-		$donate_paygol = $this->config->item('donate_paygol');
-		
 		$user_id = $this->user->getId();
 		
 		$data = array(
-			"donate_paypal" => $donate_paypal, 
-			"donate_paygol" => $donate_paygol,
+			"donate_paypal" => $this->config->item('donate_paypal'),
+			"donate_paygol" => $this->config->item('donate_paygol'),
+			"donate_paymentwall" => $this->config->item('donate_paymentwall'),
 			"user_id" => $user_id,
 			"server_name" => $this->config->item('server_name'),
 			"currency" => $this->config->item('donation_currency'),

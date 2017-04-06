@@ -128,12 +128,12 @@
 		<!-- Top bar -->
 		<header>
 			<div class="center_1020">
-				<a href="#" class="logo"></a>
+				<a href="{$url}admin/" class="logo"></a>
 
 				<!-- Top menu -->
 				<aside class="right">
 					<nav>
-						<a href="{$url}ucp" data-hasevent="1">
+						<a target="_blank" href="{$url}ucp" data-hasevent="1">
 							<div class="icon logout"></div>
 							Go back
 						</a>

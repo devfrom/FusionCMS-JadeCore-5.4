@@ -43,11 +43,7 @@ class Realms
 		
 		$realms = $this->CI->cms_model->getRealms();
 
-		if($realms == false)
-		{
-			show_error("Please add at least one realm to the `realms` table!");
-		}
-		else
+		if($realms != false)
 		{
 			foreach($realms as $realm)
 			{
@@ -278,7 +274,28 @@ class Realms
 	 */
 	public function getEmulator()
 	{
-		return $this->realms[0]->getEmulator();
+		if ($this->realms)
+		{
+			return $this->realms[0]->getEmulator();
+		}
+
+		// Make sure the emulator is installed
+		if(file_exists('application/emulators/'.$this->defaultEmulator.'.php'))
+		{
+			require_once('application/emulators/'.$this->defaultEmulator.'.php');
+		}
+		else
+		{
+			show_error("The entered emulator (".$this->defaultEmulator.") doesn't exist in application/emulators/");
+		}
+
+		$config = array();
+		$config['id'] = 1;
+
+		// Initialize the objects
+		$emulator = new $this->defaultEmulator($config);
+
+		return $emulator;
 	}
 
 	/**
